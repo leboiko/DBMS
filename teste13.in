@@ -1,0 +1,37 @@
+#input
+1 1 R X -
+2 2 W X 30
+3 2 W Y 50
+4 3 W Y 56
+5 1 W Y 23
+6 1 C - -
+7 2 C - -
+8 3 C - -
+
+#time
+T1  T2  T3
+RX
+    WX
+    WY
+        WY
+WY
+C
+    C
+        C
+
+#results
+resultado: SS
+X: 30
+Y: 23
+
+#log
+1;T1;start
+2;T2;start
+3;T2;X;NULL;30
+4;T2;Y;NULL;50
+5;T3;start
+6;T3;Y;50;56
+7;T1;Y;56;23
+8;T1;commit
+9;T2;commit
+10;T3;commit

@@ -1,0 +1,26 @@
+#input
+1 1 W X 400
+2 2 R Y -
+3 1 R Y -
+4 2 R X -
+5 1 C - -
+6 2 C - -
+
+#time
+T1  T2
+WX
+    RY
+RY
+    RX
+C
+    C
+
+#results
+resultado: SS
+X: 400
+Y:0
+
+#log
+1;T1;start
+2;T1;X;NULL;400
+5;T1;commit
