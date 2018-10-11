@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sgbd.splitTransactions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sgbd.html"><font color="#ffffff">sgbd</font></a>.splitTransactions</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/luiseduardoboikoferreira/Documents/trabalhoSGBD/sgbd/splitTransactions.py">/Users/luiseduardoboikoferreira/Documents/trabalhoSGBD/sgbd/splitTransactions.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="sgbd.serialityTest.html">sgbd.serialityTest</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sgbd.splitTransactions.html#SplitTransactions">SplitTransactions</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="SplitTransactions">class <strong>SplitTransactions</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Esta&nbsp;classe&nbsp;é&nbsp;responsável&nbsp;por&nbsp;separar&nbsp;os&nbsp;blocos&nbsp;de&nbsp;transações&nbsp;e&nbsp;chamar&nbsp;os&nbsp;testes&nbsp;de&nbsp;seriabilidade<br>
+para&nbsp;determinar&nbsp;quais&nbsp;batchs&nbsp;de&nbsp;transações&nbsp;concorrentes&nbsp;podem&nbsp;ser&nbsp;executadas&nbsp;em&nbsp;modo&nbsp;serializado<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="SplitTransactions-__init__"><strong>__init__</strong></a>(self, listTransactions, listIds, dictVariables={})</dt><dd><tt>Construtor&nbsp;de&nbsp;um&nbsp;novo&nbsp;objeto&nbsp;'<a href="#SplitTransactions">SplitTransactions</a>'<br>
+&nbsp;<br>
+:listTransactions:&nbsp;Lista&nbsp;com&nbsp;as&nbsp;transações&nbsp;no&nbsp;formato&nbsp;de&nbsp;dicionário&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;'timestamp'&nbsp;:&nbsp;int,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'id'&nbsp;:&nbsp;int,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'op'&nbsp;:&nbsp;str,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'at'&nbsp;:&nbsp;str,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'newValue'&nbsp;:&nbsp;int}.<br>
+:listIds:&nbsp;Lista&nbsp;com&nbsp;os&nbsp;identificadores&nbsp;das&nbsp;transações&nbsp;no&nbsp;bloco.<br>
+:dictVariables:&nbsp;dicionário&nbsp;com&nbsp;os&nbsp;valores&nbsp;de&nbsp;atributos&nbsp;atuais</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-checkBirthAndDeath"><strong>checkBirthAndDeath</strong></a>(self, listOfTransactions, listOfIds)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe:<br>
+&nbsp;<br>
+:listOfTransactions:&nbsp;lista&nbsp;de&nbsp;transações&nbsp;no&nbsp;bloco<br>
+:listOfIds:&nbsp;lista&nbsp;de&nbsp;ID's&nbsp;das&nbsp;transações&nbsp;no&nbsp;bloco<br>
+&nbsp;<br>
+E&nbsp;retorna&nbsp;um&nbsp;dicionário&nbsp;contendo&nbsp;o&nbsp;ID&nbsp;como&nbsp;chave&nbsp;e&nbsp;uma&nbsp;tupla&nbsp;(TimestampNascimento,&nbsp;TimestampMorte)&nbsp;associada</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-cleanTheMess"><strong>cleanTheMess</strong></a>(self, listOfIdsInBatchs)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe:<br>
+&nbsp;<br>
+:listOfIdsInBatch:&nbsp;lista&nbsp;contendo&nbsp;listas&nbsp;com&nbsp;ID'S&nbsp;de&nbsp;possíveis&nbsp;blocos&nbsp;concorrentes<br>
+&nbsp;<br>
+E&nbsp;reorganiza&nbsp;os&nbsp;os&nbsp;ID's&nbsp;pertencentes&nbsp;a&nbsp;cada&nbsp;bloco.&nbsp;Ao&nbsp;final&nbsp;retorna&nbsp;uma&nbsp;lista<br>
+com&nbsp;os&nbsp;ID's&nbsp;pertencentes&nbsp;a&nbsp;cada&nbsp;bloco&nbsp;de&nbsp;transações,&nbsp;como&nbsp;no&nbsp;formato&nbsp;exemplo:<br>
+[[1,&nbsp;2][3,&nbsp;4,&nbsp;5]]</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-generateListOfBatchs"><strong>generateListOfBatchs</strong></a>(self, dictIdsLifetimes)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe:<br>
+&nbsp;<br>
+:dictIdsLifetimes:&nbsp;dicionário&nbsp;contendo&nbsp;o&nbsp;ID&nbsp;como&nbsp;chave&nbsp;e&nbsp;uma&nbsp;tupla&nbsp;(TimestampNascimento,&nbsp;TimestampMorte)&nbsp;associada<br>
+&nbsp;<br>
+E&nbsp;retorna&nbsp;uma&nbsp;lista&nbsp;de&nbsp;listas&nbsp;detransações&nbsp;por&nbsp;bloco,&nbsp;como&nbsp;no&nbsp;exemplo:&nbsp;[[1,&nbsp;2],&nbsp;[3,&nbsp;4,&nbsp;5]].</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-getBatchVariables"><strong>getBatchVariables</strong></a>(self, listOfTransactions)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe:<br>
+&nbsp;<br>
+:listOfTransactions:&nbsp;lista&nbsp;de&nbsp;transações&nbsp;contidas&nbsp;no&nbsp;bloco<br>
+&nbsp;<br>
+E&nbsp;retorna&nbsp;um&nbsp;dicionário&nbsp;contendo&nbsp;os&nbsp;atributos&nbsp;como&nbsp;chave&nbsp;e&nbsp;seus&nbsp;respectivos<br>
+valores&nbsp;associados</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-getDictVariables"><strong>getDictVariables</strong></a>(self)</dt><dd><tt>Esta&nbsp;função&nbsp;é&nbsp;utilizada&nbsp;para&nbsp;acessar&nbsp;o&nbsp;dicionário&nbsp;com&nbsp;os&nbsp;valores&nbsp;atuais&nbsp;dos&nbsp;atributos<br>
+externamente,&nbsp;retorna&nbsp;o&nbsp;dicionário&nbsp;no&nbsp;formato&nbsp;{'ATRIBUTO'&nbsp;:&nbsp;int}</tt></dd></dl>
+
+<dl><dt><a name="SplitTransactions-split"><strong>split</strong></a>(self)</dt><dd><tt>Esta&nbsp;função&nbsp;é&nbsp;chamada&nbsp;externamente&nbsp;para&nbsp;gerar&nbsp;os&nbsp;registros&nbsp;de&nbsp;log.&nbsp;<br>
+Ao&nbsp;final,&nbsp;o&nbsp;currentIndex&nbsp;é&nbsp;atualizado.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module sgbd.makeJournal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong><a href="sgbd.html"><font color="#ffffff">sgbd</font></a>.makeJournal</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/Users/luiseduardoboikoferreira/Documents/trabalhoSGBD/sgbd/makeJournal.py">/Users/luiseduardoboikoferreira/Documents/trabalhoSGBD/sgbd/makeJournal.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="os.html">os</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="sgbd.makeJournal.html#MakeJournal">MakeJournal</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="MakeJournal">class <strong>MakeJournal</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Esta&nbsp;classe&nbsp;é&nbsp;responsável&nbsp;por&nbsp;gerar&nbsp;o&nbsp;arquivo&nbsp;de&nbsp;logs&nbsp;do&nbsp;banco<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="MakeJournal-__init__"><strong>__init__</strong></a>(self, batchOfTransactions, hasCycle, idsInBlock, dictPossibleAttr, startIndex=0, fileName='archive.log')</dt><dd><tt>Construtor&nbsp;de&nbsp;um&nbsp;novo&nbsp;objeto&nbsp;'<a href="#MakeJournal">MakeJournal</a>'<br>
+&nbsp;<br>
+:batchOfTransactions:&nbsp;Batch&nbsp;de&nbsp;transações&nbsp;para&nbsp;gerar&nbsp;log.<br>
+:hasCycle:&nbsp;Booleano&nbsp;informando&nbsp;se&nbsp;existe&nbsp;ciclo&nbsp;no&nbsp;grafo&nbsp;destas&nbsp;transações.<br>
+:idsInBlock:&nbsp;Identificadores&nbsp;das&nbsp;transações&nbsp;no&nbsp;bloco.<br>
+:dictPossibleAttr:&nbsp;Um&nbsp;dicionário&nbsp;com&nbsp;os&nbsp;atributos&nbsp;ativos&nbsp;no&nbsp;bloco&nbsp;e&nbsp;seu&nbsp;respectivo&nbsp;valor.<br>
+:startIndex:&nbsp;Indice&nbsp;inicial&nbsp;para&nbsp;os&nbsp;registros&nbsp;de&nbsp;log.&nbsp;Caso&nbsp;não&nbsp;seja&nbsp;inicializado&nbsp;o&nbsp;valor&nbsp;default&nbsp;0&nbsp;é&nbsp;utilizado.<br>
+:fileName:&nbsp;Arquivo&nbsp;para&nbsp;realizar&nbsp;a&nbsp;escrita&nbsp;dos&nbsp;logs.&nbsp;Caso&nbsp;não&nbsp;seja&nbsp;inicializado&nbsp;o&nbsp;valor&nbsp;default&nbsp;archive.log&nbsp;é&nbsp;utilizado.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-checkTs"><strong>checkTs</strong></a>(self, transaction)</dt><dd><tt>Esta&nbsp;função&nbsp;checa&nbsp;se&nbsp;o&nbsp;timestamp&nbsp;da&nbsp;transacao&nbsp;atual&nbsp;é&nbsp;maior&nbsp;do&nbsp;que&nbsp;o&nbsp;registro&nbsp;salvo<br>
+caso&nbsp;seja,&nbsp;o&nbsp;timestamp&nbsp;corrente&nbsp;é&nbsp;gravado&nbsp;na&nbsp;variavel&nbsp;startIndex</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-currentIndex"><strong>currentIndex</strong></a>(self)</dt><dd><tt>Esta&nbsp;função&nbsp;retorna&nbsp;o&nbsp;startIndex&nbsp;corrente.&nbsp;Foi&nbsp;criada&nbsp;exclusivamente&nbsp;para&nbsp;ser&nbsp;acessada&nbsp;externamente.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-currentLineInLog"><strong>currentLineInLog</strong></a>(self, line)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe&nbsp;<br>
+&nbsp;<br>
+:line:&nbsp;string&nbsp;formatada&nbsp;em&nbsp;um&nbsp;dos&nbsp;seguintes&nbsp;formatos:<br>
+&nbsp;<br>
+TS;Ti;start<br>
+TS;Ti;commit<br>
+TS;Ti;abort<br>
+TS;Ti;Xj;V1;V2<br>
+&nbsp;<br>
+e&nbsp;retorna&nbsp;True,&nbsp;caso&nbsp;exista&nbsp;a&nbsp;uma&nbsp;linha&nbsp;exatamente&nbsp;igual,&nbsp;desconsiderando&nbsp;o&nbsp;timestamp,<br>
+nos&nbsp;registros&nbsp;de&nbsp;log,&nbsp;ou&nbsp;False&nbsp;caso&nbsp;contrário.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-generateLog"><strong>generateLog</strong></a>(self)</dt><dd><tt>Esta&nbsp;é&nbsp;a&nbsp;função&nbsp;que&nbsp;é&nbsp;chamada&nbsp;externamente&nbsp;pela&nbsp;classe&nbsp;'SerialityTest'<br>
+para&nbsp;geração&nbsp;dos&nbsp;logs.&nbsp;Ela&nbsp;verifica&nbsp;o&nbsp;atributo&nbsp;:hascycle&nbsp;e&nbsp;caso<br>
+o&nbsp;mesmo&nbsp;seja&nbsp;True,&nbsp;a&nbsp;função&nbsp;'splitBatchs'&nbsp;é&nbsp;chamada,&nbsp;caso&nbsp;contrário,<br>
+a&nbsp;função&nbsp;que&nbsp;gera&nbsp;os&nbsp;logs&nbsp;'logText'&nbsp;é&nbsp;chamada</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-getLastTs"><strong>getLastTs</strong></a>(self)</dt><dd><tt>Esta&nbsp;função&nbsp;retorna&nbsp;o&nbsp;último&nbsp;timestamp&nbsp;gravado&nbsp;no&nbsp;arquivo&nbsp;de&nbsp;log</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-logText"><strong>logText</strong></a>(self, listOfTransactions)</dt><dd><tt>Esta&nbsp;é&nbsp;a&nbsp;função&nbsp;recebe&nbsp;uma&nbsp;lista&nbsp;contendo&nbsp;listas&nbsp;de&nbsp;transações<br>
+a&nbsp;serem&nbsp;fixadas&nbsp;nos&nbsp;registrosde&nbsp;log.<br>
+&nbsp;<br>
+:listOfTransactions:&nbsp;segue&nbsp;o&nbsp;formato&nbsp;[[T1],&nbsp;[T2],&nbsp;...&nbsp;,&nbsp;[Tn]]<br>
+Sendo&nbsp;Tn&nbsp;=&nbsp;[{ts1},&nbsp;{ts2},&nbsp;...,&nbsp;{tsn}],&nbsp;onde&nbsp;:tsn:&nbsp;é&nbsp;a&nbsp;transação&nbsp;corrente&nbsp;no&nbsp;bloco<br>
+&nbsp;<br>
+Para&nbsp;cada&nbsp;bloco&nbsp;T&nbsp;da&nbsp;lista&nbsp;de&nbsp;transações&nbsp;a&nbsp;função&nbsp;makeLog&nbsp;é&nbsp;chamada.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-makeLog"><strong>makeLog</strong></a>(self, eachBlock, transaction)</dt><dd><tt>Esta&nbsp;função&nbsp;efetivamente&nbsp;cria&nbsp;os&nbsp;registros&nbsp;para&nbsp;o&nbsp;log.&nbsp;Ela&nbsp;recebe&nbsp;dois&nbsp;valores.<br>
+&nbsp;<br>
+:eachblock:&nbsp;o&nbsp;bloco&nbsp;T&nbsp;atual&nbsp;de&nbsp;transações<br>
+:transaction:&nbsp;a&nbsp;transação&nbsp;atual&nbsp;{ts}&nbsp;para&nbsp;ser&nbsp;gravada&nbsp;no&nbsp;log<br>
+&nbsp;<br>
+ao&nbsp;término&nbsp;da&nbsp;execução&nbsp;da&nbsp;função,&nbsp;o&nbsp;startIndex&nbsp;é&nbsp;atualizado.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-searchIdInFile"><strong>searchIdInFile</strong></a>(self, id, op='start')</dt><dd><tt>Esta&nbsp;função&nbsp;recebe&nbsp;um&nbsp;id&nbsp;e&nbsp;o&nbsp;tipo&nbsp;de&nbsp;operação&nbsp;(opcional)&nbsp;e&nbsp;busca&nbsp;no&nbsp;arquivo&nbsp;de&nbsp;log&nbsp;se&nbsp;já&nbsp;existe<br>
+um&nbsp;registro&nbsp;para&nbsp;esta&nbsp;transação,&nbsp;retornando&nbsp;False&nbsp;caso&nbsp;não&nbsp;exista&nbsp;e&nbsp;True&nbsp;caso&nbsp;exista.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-searchOp"><strong>searchOp</strong></a>(self, id, attr, eachBlock, op)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe&nbsp;<br>
+&nbsp;<br>
+:id:&nbsp;identificador&nbsp;da&nbsp;transação<br>
+:attr:&nbsp;o&nbsp;atributo&nbsp;a&nbsp;ser&nbsp;analisado<br>
+:eachBlock:&nbsp;o&nbsp;bloco&nbsp;de&nbsp;transações&nbsp;para&nbsp;busca<br>
+:op:&nbsp;string&nbsp;que&nbsp;representa&nbsp;a&nbsp;operação&nbsp;a&nbsp;ser&nbsp;analisada&nbsp;('C',&nbsp;'A',&nbsp;'R',&nbsp;'W')<br>
+&nbsp;<br>
+e&nbsp;retorna&nbsp;True,&nbsp;caso&nbsp;exista&nbsp;a&nbsp;a&nbsp;operação&nbsp;op&nbsp;para&nbsp;o&nbsp;atributo&nbsp;attr&nbsp;identificada&nbsp;pelo&nbsp;id,&nbsp;ou&nbsp;<br>
+False&nbsp;caso&nbsp;contrário.</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-splitBatchs"><strong>splitBatchs</strong></a>(self)</dt><dd><tt>Esta&nbsp;é&nbsp;a&nbsp;função&nbsp;divide&nbsp;o&nbsp;batch&nbsp;de&nbsp;transações&nbsp;atual&nbsp;em&nbsp;listas<br>
+de&nbsp;transações&nbsp;com&nbsp;o&nbsp;mesmo&nbsp;Id&nbsp;e&nbsp;ao&nbsp;final&nbsp;chama&nbsp;a&nbsp;função&nbsp;'logText''<br>
+que&nbsp;faz&nbsp;a&nbsp;geração&nbsp;dos&nbsp;registros&nbsp;de&nbsp;log</tt></dd></dl>
+
+<dl><dt><a name="MakeJournal-writeToFile"><strong>writeToFile</strong></a>(self, line)</dt><dd><tt>Esta&nbsp;função&nbsp;recebe&nbsp;<br>
+&nbsp;<br>
+:line:&nbsp;string&nbsp;formatada&nbsp;em&nbsp;um&nbsp;dos&nbsp;seguintes&nbsp;formatos:<br>
+&nbsp;<br>
+TS;Ti;start<br>
+TS;Ti;commit<br>
+TS;Ti;abort<br>
+TS;Ti;Xj;V1;V2<br>
+&nbsp;<br>
+e&nbsp;realiza&nbsp;a&nbsp;escrita&nbsp;no&nbsp;arquivo&nbsp;de&nbsp;log.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table>
+</body></html>

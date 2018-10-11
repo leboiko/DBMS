@@ -1,0 +1,38 @@
+#input
+1 1 R X -
+2 1 R Y -
+3 1 W X 10
+4 2 R Y -
+5 3 W Y 20
+6 1 W X 15
+7 2 R Y -
+8 1 C - -
+9 2 C - -
+10 3 C - -
+
+#time
+T1  T2  T3
+RX
+RY
+WX
+    RY
+        WY
+WX
+    RY
+C
+    C
+        C
+
+#results
+resultado: NS
+X: 15
+Y: 20
+
+#log
+1;T1;start
+3;T1;X;NULL;10
+6;T1;X;10;15
+8;T1;commit
+9;T3;start
+10;T3;Y;NULL;20
+11;T3;commit

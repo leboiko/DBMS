@@ -1,0 +1,52 @@
+#input
+1 1 R X -
+2 2 R Z -
+3 1 R X -
+4 3 R X -
+5 3 R Y -
+6 1 W X 100
+7 3 W Y 100
+8 2 R Y -
+9 4 W Z 200
+10 2 W Y 300
+11 1 C - -
+12 2 C - -
+13 3 C - -
+14 4 C - -
+
+#time
+T1  T2  T3  T4
+RX
+    RZ
+RX
+        RX
+        RY
+WX
+        WY
+    RY
+            WZ
+    WY
+C
+    C
+        C
+            C
+
+#results
+resultado: SS
+X: 100
+Z: 200
+Y: 300
+
+#log
+1;T1;start
+2;T2;start
+4;T3;start
+6;T1;X;NULL;100
+7;T3;Y;NULL;100
+8;T4;start
+9;T4;Z;NULL;200
+10;T2;Y;100;300
+11;T1;commit
+12;T2;commit
+13;T3;commit
+14;T4;commit

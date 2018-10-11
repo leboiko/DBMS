@@ -1,0 +1,26 @@
+#input
+1 1 R X -
+2 2 W X 10
+3 1 W X -30
+4 2 C - -
+5 1 A - -
+
+#time
+T1  T2
+WX
+    RX
+WX
+    C
+A
+
+#results
+resultado: NS
+X: 10
+
+#log
+1;T1;start
+3;T1;X;NULL;-30
+5;T1;abort
+6;T2;start
+7;T2;X;-30;10
+8;T2;commit

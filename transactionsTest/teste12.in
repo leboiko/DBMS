@@ -1,0 +1,30 @@
+#input
+1 1 R X -
+2 2 W X -40
+3 1 W X -100
+4 3 R X -
+5 1 C - -
+6 2 C - -
+7 3 C - -
+
+#time
+T1  T2  T3
+RX
+    WX
+WX
+        RX
+C
+    C
+        C
+
+#results
+resultado: NS
+X: -40
+
+#log
+1;T1;start
+3;T1;X;NULL;-100
+5;T1;commit
+6;T2;start
+7;T2;X;-100;-40
+8;T2;commit
