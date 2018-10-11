@@ -2,6 +2,40 @@ import fileinput
 from serialityTest import SerialityTest
 import os
 
+def cleanTheMess(listOfIds):
+    indexToRemove = []
+    for i in range(0, len(listOfIds)):
+        partOne = set(listOfIds[i])
+        for j in range(i+1, len(listOfIds)):
+            partTwo = set(listOfIds[j])
+            if((len(list(partOne & partTwo)) > 0) and 
+            (j not in indexToRemove)):
+                indexToRemove.append(j)
+            # for k in range(0, len(listOfIds[j])):
+            #     # print(listOfIds[j])
+            #     if listOfIds[j][k] in listOfIds[i]:
+            #         # print('removendo', listOfIds)
+            #         indexToRemove.append(k)
+            # listOfIds[j].remove(indexToRemove)
+            # indexToRemove = []
+    for index in sorted(indexToRemove, reverse=True):
+        del listOfIds[index]
+    # print(indexToRemove)
+
+    # previousBlock = listOfIds[0]
+    # # print(previousBlock)
+    # currentLen = 0
+    # equalIds = 0
+    # print(len(listOfIds))
+    # for i in range(1, len(listOfIds)):
+    #     currentLen = len(listOfIds[i])
+    #     print(listOfIds[i])
+    #     for elem in listOfIds[i]:
+    #         if elem in previousBlock:
+    #             equalIds += 1
+    #     if currentLen == equalIds:
+    #         listOfIds.remove(listOfIds[i])
+    return listOfIds
 
 def getBatchVariables(listOfTransactions):
         dictOfVariables = dict()
@@ -14,7 +48,7 @@ def getBatchVariables(listOfTransactions):
         # populo o dict
         for att in listOfVariables:
             dictOfVariables[att] = 0
-        print(dictOfVariables)
+        # print(dictOfVariables)
         return dictOfVariables
 
 # Esta função recebe o dicionario gerado pela funcao checkBirthAndDeath e
@@ -103,9 +137,11 @@ if __name__ == '__main__':
         # Confiro se o ID consta na lista, senão adiciono ele 
         if int(newLine[1]) not in listIds:
             listIds.append(int(newLine[1]))
-
-    batchsTransactionsIds = generateListOfBatchs(checkBirthAndDeath(listTransactions, listIds))
-
+    
+    # batchsTransactionsIds = generateListOfBatchs(checkBirthAndDeath(listTransactions, listIds))
+    # print(batchsTransactionsIds)
+    batchsTransactionsIds = cleanTheMess(generateListOfBatchs(checkBirthAndDeath(listTransactions, listIds)))
+    # print(batchsTransactionsIds)
     dictVariables = getBatchVariables([listTransactions])
 
     newBatch = list()
@@ -115,13 +151,18 @@ if __name__ == '__main__':
     for batch in batchsTransactionsIds:
         for transaction in listTransactions:
             if transaction['id'] in batch:
-                print(transaction)
+                # print(transaction)
                 newBatch.append(transaction)
         # Neste momento, newBatch contem todas as transações do bloco
         serialityChecking = SerialityTest(newBatch, batch, dictVariables, startIndex)
         serialityChecking.checkConditions()
         startIndex = serialityChecking.currentIndex - 1
+        # print(startIndex)
         newBatch = []
-
-    print(dictVariables)
+        # print(20*'-')
+    # pego a lista de chaves ordenada
+    orderedListOfKeys = sorted(list(dictVariables))
+    for key in orderedListOfKeys:
+        print('{0};{1}'.format(key.upper(),dictVariables[key]))
+    # print(dictVariables)
 

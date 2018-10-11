@@ -10,7 +10,10 @@ class MakeJournal:
         self.startIndex = startIndex
 
     def generateLog(self):
-        self.splitBatchs(self.batchOfTransactions)
+        if self.hasCycle:
+            self.splitBatchs(self.batchOfTransactions)
+        else:
+            self.logText([self.batchOfTransactions])
         # print(self.dictPossibleAttr)
             
     def splitBatchs(self, batchOfTransactions):
@@ -54,12 +57,26 @@ class MakeJournal:
             except IOError:
                 print('Error while writeng the log file!')
         return recordExists
+
+    def getLastTs(self, fileName):
+        lastTs = 0
+        if os.path.isfile(fileName):
+            try:
+                with open(fileName, "r") as outfile:
+                    for line in outfile:
+                        lastTs = line.strip().split(';')[0]
+            except IOError:
+                print('Error while writeng the log file!')
+        # print(lastTs)
+        return lastTs
     
     def makeLog(self, eachBlock, transaction):
-
         stringLine = ''
         self.checkTs(transaction)
-        # assumo que sempre vai começar com uma leitura
+        
+        if transaction['timestamp'] <= int(self.getLastTs('archive.log')): 
+            self.startIndex = int(self.getLastTs('archive.log')) + 1
+        
         if transaction['op'].upper() == 'R':
             for i in range(1, len(eachBlock)):
                 if ((eachBlock[i]['op'].upper() == 'W') and 
@@ -68,13 +85,23 @@ class MakeJournal:
                             stringLine = '{0};T{1};start\n'.format(self.startIndex, transaction['id'])
 
         elif transaction['op'].upper() == 'W':
+            # caso especial, nao le, apenas da W
+            if not self.searchIdInFile('archive.log', transaction['id']):
+                # self.startIndex = int(self.getLastTs('archive.log')) + 1
+                self.writeToFile('{0};T{1};start\n'.format(self.startIndex, transaction['id']))
+                self.startIndex += 1
             if self.dictPossibleAttr[transaction['at']] == 0:
                 value = 'NULL'
             else:
                 value = self.dictPossibleAttr[transaction['at']]
-
-            stringLine = '{0};T{1};{2};{3};{4}\n'.format(self.startIndex, transaction['id'], 
-                transaction['at'].upper(), value, transaction['newValue'])
+            # caso especial escreve NULL
+            if transaction['newValue'] == '-':
+                print('escreve null')
+                stringLine = '{0};T{1};{2};{3};{4}\n'.format(self.startIndex, transaction['id'], 
+                    transaction['at'].upper(), value, 'NULL')
+            else:
+                stringLine = '{0};T{1};{2};{3};{4}\n'.format(self.startIndex, transaction['id'], 
+                    transaction['at'].upper(), value, transaction['newValue'])
             
             if not self.searchAbort(transaction['id'], transaction['at'], eachBlock):
                 if transaction['newValue'] != '-':
@@ -90,7 +117,9 @@ class MakeJournal:
         # Se tem uma linha para imprimir para o arquivo, imprime        
         if stringLine != '' and not self.currentLineInLog('archive.log', stringLine):   
             self.writeToFile(stringLine)
+        # print(self.startIndex)
         self.startIndex = self.startIndex + 1
+        
     
     
     def currentLineInLog(self, fileName, line):
@@ -108,8 +137,7 @@ class MakeJournal:
                         # print(listValues, toCompare)
                         # print(listValues, toCompare)
                         if listValues == toCompare:
-                            print('true motherfocker!')
-                            
+                            # print('Transacao {0} no at {1} não foi gravada!'.format(toCompare[0], toCompare[1]))
                             recordExists = True
             except IOError:
                 print('Error while writeng the log file!')

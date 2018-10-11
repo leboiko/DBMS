@@ -30,7 +30,6 @@ class SerialityTest:
             self.dictVariableValues,
             self.currentIndex)
         newJournal.generateLog()
-
         self.currentIndex = newJournal.currentIndex()
 
     # Esta função recebe o batch de transações, a primeira operação a ser considerada, tal 
